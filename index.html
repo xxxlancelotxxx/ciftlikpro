@@ -1278,7 +1278,6 @@ async function saveBirth(){
   for(var i=1;i<=count;i++){
     var lk=gv('l'+i+'-kupe');
     if(!lk){
-      // Eğer kuzuya o an küpe takılmadıysa geçici TMP üret
       lk = 'TMP-' + momKupe + '-' + Math.floor(Math.random()*10000);
     }
     
@@ -1527,13 +1526,11 @@ function handleQR(code){
   if(isBulk){
     if(scannedQRs.indexOf(code) === -1){
       scannedQRs.push(code);
-      beep(); // Bip sesi
+      beep();
       renderBulkQRList();
     }
-    // Toplu modda okumaya devam et
     qrFrame = requestAnimationFrame(qrLoop);
   } else {
-    // Tekli mod - Okur ve durur
     if(qrFrame){cancelAnimationFrame(qrFrame);qrFrame=null;}
     document.getElementById('qrTxt').textContent='✅ Okunan: '+code;
     document.getElementById('scanResult').innerHTML='<div class="alert al-s">✅ <strong>'+code+'</strong><br><button class="btn bp btn-sm mt8" onclick="useQR(\''+code+'\')">Bu Küpe ile Devam Et →</button></div>';
@@ -1597,9 +1594,8 @@ async function runAI() {
                  (symptoms ? '\nBelirtiler: ' + symptoms : '') + 
                  '\n\nDeğerlendir:\n1. Genel görünüm ve BCS skoru (1-5)\n2. Gözlemlenen sağlık sorunları\n3. Acil müdahale gerekiyor mu?\n4. Önerilen bakım/tedavi\n5. Veterinere gitme gerekliliği\n\nTürkçe, kısa ve net yanıt ver.';
 
-    // GEMINI API KEY BURADA
     var apiKey = 'AIzaSyBvEenIk1WLawkwTm35hWgTj5RT3LyyYp8'; 
-    var url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' + apiKey;
+    var url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + apiKey;
 
     var res = await fetch(url, {
       method: 'POST',
