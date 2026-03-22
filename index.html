@@ -57,12 +57,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
 .main{padding:14px;max-width:1440px;margin:0 auto}
 .page{display:none}.page.active{display:block}
 
-/* CARDS */
+/* CARDS & GRIDS */
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rad-lg);padding:14px;box-shadow:var(--shadow)}
 .card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:11px;padding-bottom:9px;border-bottom:1px solid var(--border-light)}
 .card-title{font-family:'Fraunces',serif;font-size:14px;color:var(--g800)}
 
-/* GRIDS */
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
 .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
@@ -91,7 +90,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
 .btn-sm{padding:4px 8px;font-size:11px}.btn-xs{padding:2px 6px;font-size:10px}
 .flex-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 .flex-bet{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
-.mb12{margin-bottom:12px}.mb16{margin-bottom:16px}.mt8{margin-top:8px}.mt12{margin-top:12px}
+.mb12{margin-bottom:12px}.mt8{margin-top:8px}.mt12{margin-top:12px}
 
 /* FORMS */
 .fg{margin-bottom:10px}
@@ -228,13 +227,11 @@ tr:hover td{background:var(--g50)}
 .photo-prev{width:100%;aspect-ratio:16/9;background:#111;border-radius:var(--rad);overflow:hidden;display:flex;align-items:center;justify-content:center;color:var(--gray400);font-size:12px}
 .photo-prev img{width:100%;height:100%;object-fit:contain}
 
-/* VAX */
+/* VAX & RATION */
 .vs-item{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border-light);gap:6px}
 .vs-item:last-child{border:none}
 .vs-name{font-weight:700;font-size:12px}
 .vs-note{font-size:10px;color:var(--text-light);font-style:italic;margin-top:1px}
-
-/* RATION */
 .rc{background:var(--a50);border:1px solid var(--a100);border-radius:var(--rad);padding:10px;margin-bottom:8px}
 .ri{display:flex;justify-content:space-between;font-size:12px;padding:3px 0;border-bottom:1px solid var(--a100)}
 .ri:last-child{border:none}
@@ -246,7 +243,6 @@ tr:hover td{background:var(--g50)}
 </head>
 <body>
 
-<!-- ========== LOGIN ========== -->
 <div id="loginScreen">
   <div class="login-box">
     <div class="login-logo">
@@ -269,7 +265,6 @@ tr:hover td{background:var(--g50)}
   </div>
 </div>
 
-<!-- ========== APP ========== -->
 <div id="appScreen">
   <header class="header">
     <div>
@@ -302,26 +297,26 @@ tr:hover td{background:var(--g50)}
 
   <div class="main">
 
-    <!-- DASHBOARD -->
     <div class="page active" id="pg-dashboard">
       <div class="g5 mb12" id="dashStats"></div>
-      <div class="g2 mb12">
-        <div class="card"><div class="card-head"><div class="card-title">⚠️ Acil Görevler</div><button class="btn btn-sm bs" onclick="goPage('alerts')">Tümü</button></div><div id="todayTasks"></div></div>
-        <div class="card"><div class="card-head"><div class="card-title">⚖️ Son Kilo</div></div><div id="recentWeights"></div></div>
-      </div>
+      
       <div class="g3 mb12">
+        <div class="card"><div class="card-head"><div class="card-title">🐑 Irk Dağılımı</div></div><div id="dashBreeds"></div></div>
+        <div class="card" style="grid-column: span 2;"><div class="card-head"><div class="card-title">⚠️ Acil Görevler</div><button class="btn btn-sm bs" onclick="goPage('alerts')">Tümü</button></div><div id="todayTasks"></div></div>
+      </div>
+
+      <div class="g3 mb12">
+        <div class="card"><div class="card-head"><div class="card-title">⚖️ Son Kilo</div></div><div id="recentWeights"></div></div>
         <div class="card"><div class="card-head"><div class="card-title">🐣 Son Doğumlar</div></div><div id="recentBirths"></div></div>
         <div class="card"><div class="card-head"><div class="card-title">🤰 Gebe Hayvanlar</div></div><div id="dashPregnant"></div></div>
-        <div class="card"><div class="card-head"><div class="card-title">🏥 Tedavide</div></div><div id="dashSick"></div></div>
       </div>
     </div>
 
-    <!-- ANIMALS -->
     <div class="page" id="pg-animals">
       <div class="quick-add mb12">
         <h3>⚡ Hızlı Hayvan Ekle</h3>
         <div class="qa-grid">
-          <div class="qa-btn" onclick="openQRScan()"><span class="qa-icon">📷</span><div class="qa-label">QR Tara</div><div class="qa-desc">Küpe oku</div></div>
+          <div class="qa-btn" onclick="openQRScan()"><span class="qa-icon">📷</span><div class="qa-label">QR Tara</div><div class="qa-desc">Toplu okuma</div></div>
           <div class="qa-btn" onclick="openAIModal()"><span class="qa-icon">🤖</span><div class="qa-label">AI Analiz</div><div class="qa-desc">Fotoğraf çek</div></div>
           <div class="qa-btn" onclick="openAnimalModal()"><span class="qa-icon">✍️</span><div class="qa-label">Manuel</div><div class="qa-desc">Form ile</div></div>
           <div class="qa-btn" onclick="openBulkAdd()"><span class="qa-icon">📋</span><div class="qa-label">Toplu Ekle</div><div class="qa-desc">Liste ile</div></div>
@@ -331,6 +326,13 @@ tr:hover td{background:var(--g50)}
         <div class="flex-row">
           <div class="sw"><span class="si">🔍</span><input class="fc" id="aSearch" placeholder="Küpe, isim..." oninput="renderAnimals()"></div>
           <select class="fc" id="aFilter" onchange="renderAnimals()" style="width:auto"><option value="">Tümü</option><option value="koyun">Koyun</option><option value="koc">Koç</option><option value="kuzu">Kuzu</option></select>
+          <select class="fc" id="aBreedFilter" onchange="renderAnimals()" style="width:auto">
+            <option value="">Tüm Irklar</option>
+            <option value="Ile de France">Ile de France</option>
+            <option value="Karya">Karya</option>
+            <option value="Sakız">Sakız</option>
+            <option value="Tahirova">Tahirova</option>
+          </select>
           <select class="fc" id="aStatus" onchange="renderAnimals()" style="width:auto"><option value="">Tüm durum</option><option value="aktif">Aktif</option><option value="gebe">Gebe</option><option value="hasta">Hasta</option><option value="satis">Satılık</option><option value="vefat">Vefat</option></select>
           <div class="vtog"><button class="vb active" id="vcBtn" onclick="setView('card')">▦</button><button class="vb" id="vlBtn" onclick="setView('list')">☰</button></div>
         </div>
@@ -339,7 +341,6 @@ tr:hover td{background:var(--g50)}
       <div id="animalsContainer"></div>
     </div>
 
-    <!-- VACCINES -->
     <div class="page" id="pg-vaccines">
       <div class="flex-bet mb12"><div></div><button class="btn bp" onclick="openVaxModal()">+ Aşı Kaydı</button></div>
       <div class="g2 mb12">
@@ -352,7 +353,6 @@ tr:hover td{background:var(--g50)}
       </div>
     </div>
 
-    <!-- HEALTH -->
     <div class="page" id="pg-health">
       <div class="flex-bet mb12"><div></div><button class="btn bp" onclick="openDiseaseModal()">+ Hastalık Kaydı</button></div>
       <div class="g2 mb12">
@@ -365,21 +365,18 @@ tr:hover td{background:var(--g50)}
       </div>
     </div>
 
-    <!-- BIRTHS -->
     <div class="page" id="pg-births">
       <div class="flex-bet mb12"><div></div><button class="btn bp" onclick="openBirthModal()">+ Doğum Kaydı</button></div>
       <div class="tbl-wrap"><table><thead><tr><th>Anne</th><th>Baba</th><th>Tarih/Saat</th><th>Tip</th><th>Kuzu</th><th>Kuzular</th><th>Not</th></tr></thead><tbody id="birthsTable"></tbody></table></div>
       <div id="birthsEmpty" class="empty" style="display:none"><div class="empty-icon">🐣</div><p>Kayıt yok</p></div>
     </div>
 
-    <!-- GESTATION -->
     <div class="page" id="pg-gestation">
       <div class="flex-bet mb12"><div></div><button class="btn bp" onclick="openGestModal()">+ Gebelik Kaydı</button></div>
       <div class="tbl-wrap"><table><thead><tr><th>Küpe</th><th>Koyun</th><th>Koç</th><th>Çiftleşme</th><th>Tahmini</th><th>Hafta</th><th>Kalan</th><th>Durum</th><th>İşlem</th></tr></thead><tbody id="gestTable"></tbody></table></div>
       <div id="gestEmpty" class="empty" style="display:none"><div class="empty-icon">🤰</div><p>Kayıt yok</p></div>
     </div>
 
-    <!-- WEIGHT -->
     <div class="page" id="pg-weight">
       <div class="flex-bet mb12">
         <div class="sw"><span class="si">🔍</span><input class="fc" id="wSearch" placeholder="Hayvan ara..." oninput="renderWeightPage()"></div>
@@ -395,7 +392,6 @@ tr:hover td{background:var(--g50)}
       </div>
     </div>
 
-    <!-- FEED -->
     <div class="page" id="pg-feed">
       <div class="flex-bet mb12"><div></div><div class="flex-row"><button class="btn bs" onclick="openFeedTplModal()">📋 Şablon</button><button class="btn bp" onclick="openFeedModal()">+ Yem Kaydı</button></div></div>
       <div class="g2 mb12">
@@ -408,7 +404,6 @@ tr:hover td{background:var(--g50)}
       </div>
     </div>
 
-    <!-- CAMERAS -->
     <div class="page" id="pg-cameras">
       <div class="g2 mb14">
         <div class="tapo-card">
@@ -432,18 +427,11 @@ tr:hover td{background:var(--g50)}
       </div>
     </div>
 
-    <!-- ALERTS -->
     <div class="page" id="pg-alerts">
       <div class="card"><div class="card-head"><div class="card-title">🔔 Tüm Uyarılar</div></div><div id="allAlerts"></div></div>
     </div>
 
-  </div><!-- /main -->
-</div><!-- /appScreen -->
-
-<!-- ============ MODALS ============ -->
-
-<!-- ANIMAL MODAL -->
-<div class="overlay" id="modalAnimal">
+  </div></div><div class="overlay" id="modalAnimal">
   <div class="modal modal-lg">
     <div class="modal-head"><div class="modal-title" id="modalAnimalTitle">🐑 Hayvan Ekle</div><button class="modal-x" onclick="closeM('modalAnimal')">✕</button></div>
     <div class="modal-body">
@@ -461,7 +449,9 @@ tr:hover td{background:var(--g50)}
           <div class="fg"><label class="fl">Cinsiyet</label><select class="fc" id="a-gender"><option value="disi">Dişi</option><option value="erkek">Erkek</option></select></div>
           <div class="fg"><label class="fl">Doğum Tarihi</label><input type="date" class="fc" id="a-dob"></div>
           <div class="fg"><label class="fl">Doğum Saati</label><input type="time" class="fc" id="a-dobtime"></div>
-          <div class="fg"><label class="fl">Irk</label><input class="fc" id="a-breed" placeholder="Merinos, İvesi..."></div>
+          <div class="fg"><label class="fl">Irk</label><input class="fc" id="a-breed" placeholder="Ile de France, Karya..." list="breedList">
+          <datalist id="breedList"><option value="Ile de France"><option value="Karya"><option value="Sakız"><option value="Tahirova"></datalist>
+          </div>
           <div class="fg"><label class="fl">Renk</label><input class="fc" id="a-color"></div>
           <div class="fg"><label class="fl">Ağırlık (kg)</label><input type="number" class="fc" id="a-weight" step="0.1"></div>
           <div class="fg"><label class="fl">Durum</label><select class="fc" id="a-status"><option value="aktif">✅ Aktif</option><option value="gebe">🤰 Gebe</option><option value="hasta">🏥 Hasta</option><option value="satis">💰 Satılık</option><option value="vefat">💀 Vefat</option></select></div>
@@ -501,15 +491,19 @@ tr:hover td{background:var(--g50)}
   </div>
 </div>
 
-<!-- DETAIL MODAL -->
 <div class="overlay" id="modalDetail">
   <div class="modal" style="max-width:900px">
-    <div class="modal-head"><div class="modal-title" id="detailTitle">Detay</div><div class="flex-row"><button class="btn ba_ btn-sm" id="detailEditBtn">✏️ Düzenle</button><button class="modal-x" onclick="closeM('modalDetail')">✕</button></div></div>
+    <div class="modal-head">
+      <div class="modal-title" id="detailTitle" style="display:flex;align-items:center;gap:10px;">Detay</div>
+      <div class="flex-row">
+        <button class="btn ba_ btn-sm" id="detailEditBtn">✏️ Düzenle</button>
+        <button class="modal-x" onclick="closeM('modalDetail')">✕</button>
+      </div>
+    </div>
     <div class="modal-body" id="detailContent"></div>
   </div>
 </div>
 
-<!-- QR MODAL -->
 <div class="overlay" id="modalQR">
   <div class="modal" style="max-width:460px">
     <div class="modal-head"><div class="modal-title">📷 QR / Barkod Tara</div><button class="modal-x" onclick="stopQR()">✕</button></div>
@@ -520,7 +514,16 @@ tr:hover td{background:var(--g50)}
         <div class="scan-overlay"><div class="scan-box"><div class="scan-line"></div></div></div>
         <div class="cam-txt" id="qrTxt">Kamera başlatılıyor...</div>
       </div>
-      <div class="mt12"><label class="fl">Manuel küpe girişi</label>
+      <div class="flex-bet mt8 mb12" style="background:var(--g50);padding:8px;border-radius:7px">
+        <label style="font-size:12px;font-weight:700;color:var(--g800);display:flex;align-items:center;gap:6px">
+          <input type="checkbox" id="qrBulkMode" style="width:16px;height:16px;"> ⚡ Toplu Tarama Modu
+        </label>
+        <button class="btn bp btn-sm" id="qrBulkAddBtn" style="display:none" onclick="processBulkQR()">Seçilenleri Kaydet</button>
+      </div>
+      <div id="bulkQRList" class="flex-row" style="margin-bottom:12px"></div>
+
+      <div class="mt12" style="border-top:1px solid var(--border);padding-top:12px">
+        <label class="fl">Manuel küpe girişi</label>
         <div class="flex-row"><input class="fc" id="manualKupe" placeholder="Küpe numarası" style="flex:1"><button class="btn bp" onclick="useManualKupe()">Kullan</button></div>
       </div>
       <div id="scanResult" class="mt8"></div>
@@ -528,7 +531,6 @@ tr:hover td{background:var(--g50)}
   </div>
 </div>
 
-<!-- AI MODAL -->
 <div class="overlay" id="modalAI">
   <div class="modal" style="max-width:520px">
     <div class="modal-head"><div class="modal-title">🤖 AI Sağlık Analizi</div><button class="modal-x" onclick="closeAI()">✕</button></div>
@@ -547,7 +549,6 @@ tr:hover td{background:var(--g50)}
   </div>
 </div>
 
-<!-- AI CAM -->
 <div class="overlay" id="modalAICam">
   <div class="modal" style="max-width:440px">
     <div class="modal-head"><div class="modal-title">📷 Fotoğraf Çek</div><button class="modal-x" onclick="stopAICam()">✕</button></div>
@@ -558,7 +559,6 @@ tr:hover td{background:var(--g50)}
   </div>
 </div>
 
-<!-- VAX MODAL -->
 <div class="overlay" id="modalVax">
   <div class="modal"><div class="modal-head"><div class="modal-title">💉 Aşı Kaydı</div><button class="modal-x" onclick="closeM('modalVax')">✕</button></div>
     <div class="modal-body"><div class="frow">
@@ -577,7 +577,6 @@ tr:hover td{background:var(--g50)}
   </div>
 </div>
 
-<!-- DISEASE MODAL -->
 <div class="overlay" id="modalDisease">
   <div class="modal"><div class="modal-head"><div class="modal-title">🏥 Hastalık / Tedavi</div><button class="modal-x" onclick="closeM('modalDisease')">✕</button></div>
     <div class="modal-body"><div class="frow">
@@ -596,7 +595,6 @@ tr:hover td{background:var(--g50)}
   </div>
 </div>
 
-<!-- WEIGHT MODAL -->
 <div class="overlay" id="modalWeight">
   <div class="modal" style="max-width:420px"><div class="modal-head"><div class="modal-title">⚖️ Kilo Ölçümü</div><button class="modal-x" onclick="closeM('modalWeight')">✕</button></div>
     <div class="modal-body"><div class="frow">
@@ -610,7 +608,6 @@ tr:hover td{background:var(--g50)}
   </div>
 </div>
 
-<!-- FEED MODAL -->
 <div class="overlay" id="modalFeed">
   <div class="modal"><div class="modal-head"><div class="modal-title">🌾 Yem Kaydı</div><button class="modal-x" onclick="closeM('modalFeed')">✕</button></div>
     <div class="modal-body"><div class="frow">
@@ -630,7 +627,6 @@ tr:hover td{background:var(--g50)}
   </div>
 </div>
 
-<!-- FEED TEMPLATE MODAL -->
 <div class="overlay" id="modalFeedTpl">
   <div class="modal" style="max-width:440px"><div class="modal-head"><div class="modal-title">📋 Rasyon Şablonu</div><button class="modal-x" onclick="closeM('modalFeedTpl')">✕</button></div>
     <div class="modal-body"><div class="frow">
@@ -648,10 +644,11 @@ tr:hover td{background:var(--g50)}
   </div>
 </div>
 
-<!-- BIRTH MODAL -->
 <div class="overlay" id="modalBirth">
   <div class="modal modal-lg"><div class="modal-head"><div class="modal-title">🐣 Doğum Kaydı</div><button class="modal-x" onclick="closeM('modalBirth')">✕</button></div>
-    <div class="modal-body"><div class="frow">
+    <div class="modal-body">
+      <div class="alert al-i mb12">💡 İpucu: Kuzuya şimdilik küpe takmadıysanız küpe alanını boş bırakın. Sistem geçici (TMP) bir numara atayacaktır. Sonradan düzenleyebilirsiniz.</div>
+      <div class="frow">
       <div class="fg"><label class="fl">Anne Küpe *</label><input class="fc" id="b-mom" list="kupeList"></div>
       <div class="fg"><label class="fl">Baba Küpe</label><input class="fc" id="b-dad" list="kupeList"></div>
       <div class="fg"><label class="fl">Tarih *</label><input type="date" class="fc" id="b-date"></div>
@@ -665,7 +662,6 @@ tr:hover td{background:var(--g50)}
   </div>
 </div>
 
-<!-- GESTATION MODAL -->
 <div class="overlay" id="modalGest">
   <div class="modal" style="max-width:420px"><div class="modal-head"><div class="modal-title">🤰 Gebelik Kaydı</div><button class="modal-x" onclick="closeM('modalGest')">✕</button></div>
     <div class="modal-body"><div class="frow">
@@ -681,7 +677,6 @@ tr:hover td{background:var(--g50)}
 
 <datalist id="kupeList"></datalist>
 
-<!-- ============ SCRIPTS ============ -->
 <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.min.js"></script>
 <script>
@@ -696,6 +691,7 @@ var sb, farmId, currentFarm;
 var animalView = 'card';
 var editAnimalId = null;
 var scanStream = null, aiStream = null, aiPhotoData = null, qrFrame = null;
+var scannedQRs = [];
 var C = { animals:[], vaccines:[], diseases:[], births:[], gestation:[], weights:[], feeds:[], feedTemplates:[], cameras:[] };
 
 // ===== UTILS =====
@@ -721,6 +717,19 @@ function notify(msg,type){
   document.getElementById('notifArea').appendChild(d);
   setTimeout(function(){ d.remove(); },3000);
 }
+function beep() {
+  try {
+    var ctx = new (window.AudioContext || window.webkitAudioContext)();
+    var osc = ctx.createOscillator();
+    var gainNode = ctx.createGain();
+    osc.connect(gainNode);
+    gainNode.connect(ctx.destination);
+    osc.frequency.value = 800;
+    gainNode.gain.value = 0.1;
+    osc.start();
+    osc.stop(ctx.currentTime + 0.1);
+  } catch(e){}
+}
 function sTab(prefix,tab,el){
   ['basic','parents','health','notes'].forEach(function(t){
     var e=document.getElementById(prefix+'-'+t); if(e)e.style.display='none';
@@ -730,12 +739,11 @@ function sTab(prefix,tab,el){
 }
 function updateKupeLists(){
   var opts=C.animals.map(function(a){ return '<option value="'+a.kupe+'">'; }).join('');
-  document.querySelectorAll('datalist').forEach(function(dl){ dl.innerHTML=opts; });
+  document.querySelectorAll('datalist[id="kupeList"]').forEach(function(dl){ dl.innerHTML=opts; });
 }
 
 // ===== LOGIN =====
 document.addEventListener('DOMContentLoaded', function(){
-  // Otomatik giriş — daha önce giriş yaptıysa direkt aç
   if(localStorage.getItem('ciftlik_loggedin')==='1'){
     var btn=document.getElementById('loginBtn');
     btn.disabled=true; btn.textContent='Bağlanıyor...';
@@ -748,13 +756,9 @@ document.addEventListener('DOMContentLoaded', function(){
       btn.disabled=false; btn.textContent='Giriş Yap';
     });
   }
-
-  // Login button
   document.getElementById('loginBtn').addEventListener('click', doLogin);
-  // Enter key
   document.getElementById('inputPass').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
   document.getElementById('inputUser').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
-  // Close modals on backdrop
   document.querySelectorAll('.overlay').forEach(function(m){
     m.addEventListener('click', function(e){ if(e.target===m) m.classList.remove('open'); });
   });
@@ -793,7 +797,6 @@ function doLogout(){
 async function initSupabase(){
   var cli = window.supabase || supabase;
   sb = cli.createClient(SUPA_URL, SUPA_KEY);
-  // Load or create farm
   var res = await sb.from('farms').select('*').limit(1);
   if(res.data && res.data.length>0){
     currentFarm=res.data[0]; farmId=res.data[0].id;
@@ -887,6 +890,17 @@ function renderDashboard(){
     '<div class="stat coral"><div class="stat-icon">🤰</div><div class="stat-val">'+gebe+'</div><div class="stat-label">Gebe</div></div>'+
     '<div class="stat red"><div class="stat-icon">🏥</div><div class="stat-val">'+hasta+'</div><div class="stat-label">Tedavide</div></div>';
 
+  // Irk Dağılımı
+  var breeds = {};
+  act.forEach(function(a){
+    var b = a.breed ? a.breed.trim() : 'Belirtilmemiş';
+    breeds[b] = (breeds[b] || 0) + 1;
+  });
+  var breedsHtml = Object.keys(breeds).sort(function(a,b){return breeds[b]-breeds[a];}).map(function(k){
+    return '<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border-light)"><span>'+k+'</span><span class="badge bg">'+breeds[k]+'</span></div>';
+  }).join('');
+  document.getElementById('dashBreeds').innerHTML = breedsHtml || '<p style="font-size:12px;color:var(--text-light)">Irk bilgisi yok</p>';
+
   var alerts=computeAlerts().filter(function(a){return a.sev==='danger';}).slice(0,5);
   document.getElementById('todayTasks').innerHTML=alerts.length
     ?alerts.map(function(a){return'<div class="alert al-d">🚨 <span>'+a.msg+'</span></div>';}).join('')
@@ -914,12 +928,6 @@ function renderDashboard(){
     var rem=g.expected_date?daysDiff(t,g.expected_date):'?';
     return'<div style="margin-bottom:10px"><div class="flex-bet" style="margin-bottom:2px"><span><span class="kupe" style="font-size:9px">'+g.kupe+'</span>'+(a.name?' <strong style="font-size:11px"> '+a.name+'</strong>':'')+'</span><span class="badge bc">'+(rem>=0?rem+' gün':'Geçti')+'</span></div><div class="prog-wrap"><div class="prog-fill" style="width:'+pct+'%;background:var(--c400)"></div></div><div style="font-size:10px;color:var(--text-light)">'+pct+'% — '+fmtDate(g.expected_date)+'</div></div>';
   }).join(''):'<p style="font-size:12px;color:var(--text-light)">Gebe hayvan yok</p>';
-
-  var sick=C.diseases.filter(function(d){return d.status==='tedavi';}).slice(0,4);
-  document.getElementById('dashSick').innerHTML=sick.length?sick.map(function(d){
-    var a=C.animals.find(function(x){return x.kupe===d.kupe;})||{};
-    return'<div style="padding:5px 0;border-bottom:1px solid var(--border-light)"><div style="font-weight:700;font-size:12px;color:var(--r800)">'+d.name+'</div><div style="font-size:11px;color:var(--text-muted)"><span class="kupe" style="font-size:9px">'+d.kupe+'</span>'+(a.name?' ('+a.name+')':'')+'</div></div>';
-  }).join(''):'<div class="alert al-s" style="font-size:11px">✅ Tedavide hayvan yok</div>';
 }
 
 // ===== ANIMALS =====
@@ -931,36 +939,41 @@ function setView(v){
 }
 function renderAnimals(){
   var search=(document.getElementById('aSearch')?document.getElementById('aSearch').value:'').toLowerCase();
-  var filter=gv('aFilter'), statusF=gv('aStatus');
+  var filter=gv('aFilter'), statusF=gv('aStatus'), breedFilter=gv('aBreedFilter').toLowerCase();
+  
   var list=C.animals.filter(function(a){
     return(!search||a.kupe.toLowerCase().indexOf(search)>=0||(a.name||'').toLowerCase().indexOf(search)>=0)&&
-           (!filter||a.type===filter)&&(!statusF||a.status===statusF);
+           (!filter||a.type===filter)&&
+           (!statusF||a.status===statusF)&&
+           (!breedFilter||(a.breed && a.breed.toLowerCase().indexOf(breedFilter)>=0));
   });
+  
   var cont=document.getElementById('animalsContainer');
   if(!list.length){cont.innerHTML='<div class="empty"><div class="empty-icon">🐑</div><p>Hayvan bulunamadı</p></div>';return;}
   var stM={aktif:'bg',gebe:'bc',hasta:'br',satis:'ba',vefat:'bgy'};
   var stL={aktif:'Aktif',gebe:'Gebe',hasta:'Hasta',satis:'Satılık',vefat:'Vefat'};
+  
   if(animalView==='card'){
     cont.innerHTML='<div class="animal-cards">'+list.map(function(a){
       var icon={koyun:'🐑',koc:'🐏',kuzu:'🐑'}[a.type]||'🐑';
       var bgC={koyun:'var(--g50)',koc:'var(--b50)',kuzu:'var(--a50)'}[a.type];
+      var isTmp=a.kupe.startsWith('TMP-');
       return'<div class="animal-card" onclick="openDetail(\''+a.id+'\')">'+
         '<span class="ac-status"><span class="badge '+(stM[a.status]||'bgy')+'">'+(stL[a.status]||a.status)+'</span></span>'+
         (a.photo?'<img src="'+a.photo+'" class="ac-photo">'  :'')+
         '<div class="animal-card-top"><div class="avatar" style="background:'+bgC+'">'+icon+'</div>'+
-        '<div><div class="ac-name">'+(a.name||icon+' '+a.kupe)+'</div><div class="ac-kupe">'+a.kupe+(a.breed?' • '+a.breed:'')+'</div></div></div>'+
+        '<div><div class="ac-name">'+(a.name||icon+' '+(isTmp?'Geçici Kuzu':a.kupe))+'</div><div class="ac-kupe">'+(isTmp?'Geçici: '+a.kupe:a.kupe)+(a.breed?' • '+a.breed:'')+'</div></div></div>'+
         '<div style="display:flex;gap:10px;font-size:10px;color:var(--text-muted)"><span>📅 '+ageStr(a.dob)+'</span>'+(a.weight?'<span>⚖️ '+a.weight+'kg</span>':'')+'</div>'+
         '</div>';
     }).join('')+'</div>';
   } else {
-    cont.innerHTML='<div class="tbl-wrap"><table><thead><tr><th>Küpe</th><th>Ad</th><th>Tür</th><th>Doğum</th><th>Yaş</th><th>Ağırlık</th><th>Anne</th><th>Baba</th><th>Durum</th><th>İşlem</th></tr></thead><tbody>'+
+    cont.innerHTML='<div class="tbl-wrap"><table><thead><tr><th>Küpe</th><th>Ad</th><th>Irk</th><th>Tür</th><th>Doğum</th><th>Yaş</th><th>Ağırlık</th><th>Durum</th><th>İşlem</th></tr></thead><tbody>'+
       list.map(function(a){
         return'<tr><td><span class="kupe">'+a.kupe+'</span></td><td>'+(a.name||'—')+'</td>'+
+          '<td>'+(a.breed||'—')+'</td>'+
           '<td>'+({koyun:'Koyun',koc:'Koç',kuzu:'Kuzu'}[a.type]||a.type)+'</td>'+
           '<td>'+fmtDate(a.dob)+'</td><td>'+ageStr(a.dob)+'</td>'+
           '<td>'+(a.weight?a.weight+' kg':'—')+'</td>'+
-          '<td>'+(a.mom?'<span class="kupe" style="font-size:9px">'+a.mom+'</span>':'—')+'</td>'+
-          '<td>'+(a.dad?'<span class="kupe" style="font-size:9px">'+a.dad+'</span>':'—')+'</td>'+
           '<td><span class="badge '+(stM[a.status]||'bgy')+'">'+(stL[a.status]||a.status)+'</span></td>'+
           '<td><div class="flex-row">'+
             '<button class="btn btn-sm bs" onclick="event.stopPropagation();openDetail(\''+a.id+'\')">Detay</button>'+
@@ -1029,12 +1042,18 @@ function handleAnimalPhoto(e){
   r.readAsDataURL(file);
 }
 
-// ===== DETAIL =====
+// ===== DETAIL & SIBLINGS =====
 function openDetail(id){
   var a=C.animals.find(function(x){return x.id===id;}); if(!a)return;
   var mom=C.animals.find(function(x){return x.kupe===a.mom;});
   var dad=C.animals.find(function(x){return x.kupe===a.dad;});
   var ch=C.animals.filter(function(x){return x.mom===a.kupe||x.dad===a.kupe;});
+  
+  // Soy Ağacı - Kardeşler mantığı
+  var siblings = C.animals.filter(function(x){
+    return x.id !== a.id && ((a.mom && x.mom === a.mom) || (a.dad && x.dad === a.dad));
+  });
+
   var vl=C.vaccines.filter(function(v){return v.kupe===a.kupe;});
   var dl=C.diseases.filter(function(d){return d.kupe===a.kupe;});
   var wl=C.weights.filter(function(w){return w.kupe===a.kupe;}).sort(function(a,b){return b.date.localeCompare(a.date);});
@@ -1044,6 +1063,11 @@ function openDetail(id){
   var icon={koyun:'🐑',koc:'🐏',kuzu:'🐑'}[a.type]||'🐑';
   var stM={aktif:'bg',gebe:'bc',hasta:'br',satis:'ba',vefat:'bgy'};
   var stL={aktif:'Aktif',gebe:'Gebe',hasta:'Hasta',satis:'Satılık',vefat:'Vefat'};
+
+  var isTmp = a.kupe.startsWith('TMP-');
+
+  document.getElementById('detailTitle').innerHTML = icon + ' ' + (a.name||(isTmp?'Geçici Kuzu':a.kupe)) + 
+    (isTmp ? ' <button class="btn bs btn-sm" onclick="assignRealKupe(\''+a.id+'\')">🔗 Resmi Küpe Ata</button>' : '');
 
   var h='<div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:14px;flex-wrap:wrap">'+
     (a.photo?'<img src="'+a.photo+'" style="width:90px;height:90px;object-fit:cover;border-radius:10px;border:1px solid var(--border)">':'<div style="width:70px;height:70px;background:var(--g50);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px">'+icon+'</div>')+
@@ -1064,8 +1088,17 @@ function openDetail(id){
     '<div class="info-grid">'+
     '<div><div class="ik">Anne</div><div class="iv">'+(mom?'<span class="kupe" style="cursor:pointer" onclick="closeM(\'modalDetail\');setTimeout(function(){openDetail(\''+mom.id+'\');},100)">'+a.mom+'</span>'+(mom.name?' ('+mom.name+')':''):(a.mom?'<span class="kupe">'+a.mom+'</span>':'—'))+'</div></div>'+
     '<div><div class="ik">Baba</div><div class="iv">'+(dad?'<span class="kupe" style="cursor:pointer" onclick="closeM(\'modalDetail\');setTimeout(function(){openDetail(\''+dad.id+'\');},100)">'+a.dad+'</span>'+(dad.name?' ('+dad.name+')':''):(a.dad?'<span class="kupe">'+a.dad+'</span>':'—'))+'</div></div>'+
-    '</div>'+
-    (ch.length?'<div style="margin-top:6px"><div class="ik" style="margin-bottom:3px">Yavruları ('+ch.length+')</div><div class="flex-row">'+ch.map(function(c){return'<span class="kupe" style="cursor:pointer;background:var(--t600)" onclick="closeM(\'modalDetail\');setTimeout(function(){openDetail(\''+c.id+'\');},100)">'+c.kupe+(c.name?' ('+c.name+')':'')+'</span>';}).join('')+'</div></div>':'')+'</div>';
+    '</div>';
+    
+  if(ch.length){
+    h+='<div style="margin-top:6px"><div class="ik" style="margin-bottom:3px">Yavruları ('+ch.length+')</div><div class="flex-row">'+ch.map(function(c){return'<span class="kupe" style="cursor:pointer;background:var(--t600)" onclick="closeM(\'modalDetail\');setTimeout(function(){openDetail(\''+c.id+'\');},100)">'+c.kupe+(c.name?' ('+c.name+')':'')+'</span>';}).join('')+'</div></div>';
+  }
+  
+  if(siblings.length){
+    h+='<div style="margin-top:6px"><div class="ik" style="margin-bottom:3px">Kardeşleri ('+siblings.length+')</div><div class="flex-row">'+siblings.map(function(s){return'<span class="kupe" style="cursor:pointer;background:var(--a600)" onclick="closeM(\'modalDetail\');setTimeout(function(){openDetail(\''+s.id+'\');},100)">'+s.kupe+(s.name?' ('+s.name+')':'')+'</span>';}).join('')+'</div></div>';
+  }
+  
+  h+='</div>';
 
   if(wl.length){
     h+='<div style="border-top:1px solid var(--border-light);padding-top:11px;margin-bottom:11px">'+
@@ -1097,10 +1130,30 @@ function openDetail(id){
   }
   if(a.notes)h+='<div class="alert al-i mt8">📝 '+a.notes+'</div>';
 
-  document.getElementById('detailTitle').textContent=icon+' '+(a.name||a.kupe);
   document.getElementById('detailEditBtn').onclick=function(){closeM('modalDetail');editAnimal(id);};
   document.getElementById('detailContent').innerHTML=h;
   document.getElementById('modalDetail').classList.add('open');
+}
+
+// ===== RESMI KÜPE ATA =====
+async function assignRealKupe(id){
+  var nk = prompt('Hayvanın resmi küpe numarasını giriniz:');
+  if(!nk || nk.trim()==='') return;
+  nk = nk.trim();
+  
+  if(C.animals.find(function(a){return a.kupe===nk;})){ notify('Bu küpe zaten sistemde var!','err'); return; }
+  
+  var r = await sb.from('animals').update({kupe: nk}).eq('id', id);
+  if(r.error){ notify('Hata: '+r.error.message,'err'); return; }
+  
+  var a = C.animals.find(function(x){return x.id === id;});
+  if(a) a.kupe = nk;
+  
+  updateKupeLists();
+  closeM('modalDetail');
+  renderAnimals();
+  renderDashboard();
+  notify('Küpe başarıyla resmi numarayla güncellendi.');
 }
 
 // ===== VACCINES =====
@@ -1180,7 +1233,7 @@ function renderHealth(){
 function openDiseaseModal(){updateKupeLists();sv('d-start',today());document.getElementById('modalDisease').classList.add('open');}
 async function saveDisease(){
   var kupe=gv('d-kupe'),name=gv('d-name'),start=gv('d-start');
-  if(!kupe||!name||!start){notify('Küpe, teşhis ve tarih zorunludur!','err');return;}
+  if(!kupe||!name||start===''){notify('Küpe, teşhis ve tarih zorunludur!','err');return;}
   var status=gv('d-status');
   var obj={farm_id:farmId,kupe:kupe,name:name,start_date:start,end_date:gv('d-end')||null,treatment:gv('d-treatment'),medicine:gv('d-medicine'),vet:gv('d-vet'),cost:gv('d-cost')||null,status:status,notes:gv('d-notes')};
   var r=await sb.from('diseases').insert(obj).select().single();
@@ -1203,14 +1256,14 @@ async function delDisease(id){
   C.diseases=C.diseases.filter(function(x){return x.id!==id;});renderHealth();
 }
 
-// ===== BIRTHS =====
+// ===== BIRTHS & TMP KUPE =====
 function buildLambFields(){
   var count=parseInt(gv('b-count'));
   document.getElementById('lambFields').innerHTML=Array.from({length:count},function(_,i){
     return'<div style="background:var(--g50);border-radius:7px;padding:10px;margin-bottom:7px">'+
       '<div style="font-weight:700;font-size:11px;color:var(--g600);margin-bottom:7px">'+(i+1)+'. Kuzu</div>'+
       '<div class="frow">'+
-      '<div class="fg"><label class="fl">Küpe</label><input class="fc" id="l'+(i+1)+'-kupe"></div>'+
+      '<div class="fg"><label class="fl">Küpe (Boş=Geçici)</label><input class="fc" id="l'+(i+1)+'-kupe" placeholder="Opsiyonel"></div>'+
       '<div class="fg"><label class="fl">Cinsiyet</label><select class="fc" id="l'+(i+1)+'-gender"><option value="disi">Dişi</option><option value="erkek">Erkek</option></select></div>'+
       '<div class="fg"><label class="fl">Ağırlık</label><input type="number" class="fc" id="l'+(i+1)+'-weight" step="0.1"></div>'+
       '<div class="fg"><label class="fl">Ad</label><input class="fc" id="l'+(i+1)+'-name"></div>'+
@@ -1223,14 +1276,19 @@ async function saveBirth(){
   if(!momKupe||!date){notify('Anne küpe ve tarih zorunludur!','err');return;}
   var count=parseInt(gv('b-count')),dadKupe=gv('b-dad'),lambs=[];
   for(var i=1;i<=count;i++){
-    var lk=gv('l'+i+'-kupe'),lg=document.getElementById('l'+i+'-gender').value,lw=gv('l'+i+'-weight'),ln=gv('l'+i+'-name');
-    lambs.push({kupe:lk,gender:lg,weight:lw,name:ln});
-    if(lk){
-      var mom=C.animals.find(function(x){return x.kupe===momKupe;});
-      var nl={farm_id:farmId,kupe:lk,name:ln,type:'kuzu',gender:lg,dob:date,dobtime:gv('b-time'),weight:lw||null,status:'aktif',mom:momKupe,dad:dadKupe,breed:(mom?mom.breed:'')};
-      var nr=await sb.from('animals').insert(nl).select().single();
-      if(nr.data)C.animals.unshift(nr.data);
+    var lk=gv('l'+i+'-kupe');
+    if(!lk){
+      // Eğer kuzuya o an küpe takılmadıysa geçici TMP üret
+      lk = 'TMP-' + momKupe + '-' + Math.floor(Math.random()*10000);
     }
+    
+    var lg=document.getElementById('l'+i+'-gender').value,lw=gv('l'+i+'-weight'),ln=gv('l'+i+'-name');
+    lambs.push({kupe:lk,gender:lg,weight:lw,name:ln});
+    
+    var mom=C.animals.find(function(x){return x.kupe===momKupe;});
+    var nl={farm_id:farmId,kupe:lk,name:ln,type:'kuzu',gender:lg,dob:date,dobtime:gv('b-time'),weight:lw||null,status:'aktif',mom:momKupe,dad:dadKupe,breed:(mom?mom.breed:'')};
+    var nr=await sb.from('animals').insert(nl).select().single();
+    if(nr.data)C.animals.unshift(nr.data);
   }
   var obj={farm_id:farmId,mom_kupe:momKupe,dad_kupe:dadKupe,date:date,time:gv('b-time'),lamb_count:count,lambs:lambs,birth_type:gv('b-type'),notes:gv('b-notes')};
   var r=await sb.from('births').insert(obj).select().single();
@@ -1429,8 +1487,15 @@ function renderAlerts(){
   document.getElementById('allAlerts').innerHTML=h;
 }
 
-// ===== QR SCAN =====
-function openQRScan(){document.getElementById('scanResult').innerHTML='';document.getElementById('modalQR').classList.add('open');startQR();}
+// ===== QR / BARKOD SCAN & TOPLU OKUMA =====
+function openQRScan(){
+  scannedQRs=[];
+  renderBulkQRList();
+  document.getElementById('qrBulkMode').checked = false;
+  document.getElementById('scanResult').innerHTML='';
+  document.getElementById('modalQR').classList.add('open');
+  startQR();
+}
 async function startQR(){
   try{
     scanStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'},audio:false});
@@ -1448,40 +1513,115 @@ function qrLoop(){
     if(v.readyState===v.HAVE_ENOUGH_DATA){
       ctx.drawImage(v,0,0,c.width,c.height);
       var img=ctx.getImageData(0,0,c.width,c.height);
-      if(typeof jsQR!=='undefined'){var code=jsQR(img.data,img.width,img.height,{inversionAttempts:'dontInvert'});if(code){handleQR(code.data);return;}}
+      if(typeof jsQR!=='undefined'){
+        var code=jsQR(img.data,img.width,img.height,{inversionAttempts:'dontInvert'});
+        if(code){ handleQR(code.data); return; }
+      }
     }
-    qrFrame=requestAnimationFrame(scan);
+    if(qrFrame !== null) qrFrame=requestAnimationFrame(scan);
   };
   qrFrame=requestAnimationFrame(scan);
 }
-function handleQR(code){if(qrFrame){cancelAnimationFrame(qrFrame);qrFrame=null;}document.getElementById('qrTxt').textContent='✅ Okunan: '+code;document.getElementById('scanResult').innerHTML='<div class="alert al-s">✅ <strong>'+code+'</strong><br><button class="btn bp btn-sm mt8" onclick="useQR(\''+code+'\')">Bu Küpe ile Devam Et →</button></div>';}
+function handleQR(code){
+  var isBulk = document.getElementById('qrBulkMode').checked;
+  if(isBulk){
+    if(scannedQRs.indexOf(code) === -1){
+      scannedQRs.push(code);
+      beep(); // Bip sesi
+      renderBulkQRList();
+    }
+    // Toplu modda okumaya devam et
+    qrFrame = requestAnimationFrame(qrLoop);
+  } else {
+    // Tekli mod - Okur ve durur
+    if(qrFrame){cancelAnimationFrame(qrFrame);qrFrame=null;}
+    document.getElementById('qrTxt').textContent='✅ Okunan: '+code;
+    document.getElementById('scanResult').innerHTML='<div class="alert al-s">✅ <strong>'+code+'</strong><br><button class="btn bp btn-sm mt8" onclick="useQR(\''+code+'\')">Bu Küpe ile Devam Et →</button></div>';
+  }
+}
+
+function renderBulkQRList(){
+  var container = document.getElementById('bulkQRList');
+  container.innerHTML = scannedQRs.map(function(c, i){
+    return '<span class="badge bg" style="margin-bottom:6px;font-size:11px;">'+c+' <span style="cursor:pointer;color:var(--r600);margin-left:4px" onclick="removeBulkQR('+i+')">✕</span></span>';
+  }).join('');
+  document.getElementById('qrBulkAddBtn').style.display = scannedQRs.length ? 'block' : 'none';
+}
+function removeBulkQR(index){ scannedQRs.splice(index, 1); renderBulkQRList(); }
+
+async function processBulkQR(){
+  stopQR();
+  document.getElementById('qrBulkAddBtn').textContent = 'Kaydediliyor...';
+  var added = 0;
+  for(var i=0; i<scannedQRs.length; i++){
+    var kupe = scannedQRs[i];
+    if(!C.animals.find(function(a){return a.kupe === kupe;})){
+      var r = await sb.from('animals').insert({farm_id:farmId, kupe:kupe, type:'koyun', gender:'disi', status:'aktif'}).select().single();
+      if(r.data){ C.animals.unshift(r.data); added++; }
+    }
+  }
+  scannedQRs = [];
+  closeM('modalQR');
+  updateKupeLists();
+  renderAnimals();
+  renderDashboard();
+  notify(added + ' adet hayvan başarıyla eklendi.');
+}
+
 function useManualKupe(){var k=gv('manualKupe');if(!k){notify('Küpe giriniz','err');return;}useQR(k);}
 function useQR(kupe){stopQR();var ex=C.animals.find(function(a){return a.kupe===kupe;});if(ex)openDetail(ex.id);else{openAnimalModal(kupe);notify('Yeni hayvan: '+kupe);}}
 function stopQR(){if(qrFrame){cancelAnimationFrame(qrFrame);qrFrame=null;}if(scanStream){scanStream.getTracks().forEach(function(t){t.stop();});scanStream=null;}closeM('modalQR');}
 
-// ===== AI HEALTH =====
+// ===== GEMINI AI HEALTH =====
 function openAIModal(){aiPhotoData=null;document.getElementById('aiPhotoPreview').innerHTML='<span>📷 Fotoğraf ekleyin</span>';document.getElementById('aiResult').innerHTML='';document.getElementById('modalAI').classList.add('open');}
 function closeAI(){stopAICam();closeM('modalAI');}
 function handleAIPhoto(e){var file=e.target.files[0];if(!file)return;var r=new FileReader();r.onload=function(ev){aiPhotoData=ev.target.result;document.getElementById('aiPhotoPreview').innerHTML='<img src="'+aiPhotoData+'" style="width:100%;height:100%;object-fit:contain">';};r.readAsDataURL(file);}
 async function startAICam(){try{aiStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'},audio:false});document.getElementById('aiVideo').srcObject=aiStream;document.getElementById('modalAICam').classList.add('open');}catch(e){notify('Kamera erişimi yok!','err');}}
 function captureAI(){var v=document.getElementById('aiVideo');var c=document.createElement('canvas');c.width=v.videoWidth;c.height=v.videoHeight;c.getContext('2d').drawImage(v,0,0);aiPhotoData=c.toDataURL('image/jpeg',0.8);document.getElementById('aiPhotoPreview').innerHTML='<img src="'+aiPhotoData+'" style="width:100%;height:100%;object-fit:contain">';stopAICam();document.getElementById('modalAI').classList.add('open');}
 function stopAICam(){if(aiStream){aiStream.getTracks().forEach(function(t){t.stop();});aiStream=null;}closeM('modalAICam');}
-async function runAI(){
-  if(!aiPhotoData){notify('Önce fotoğraf ekleyin!','err');return;}
-  var kupe=gv('ai-kupe'),animal=C.animals.find(function(x){return x.kupe===kupe;}),symptoms=gv('ai-symptoms');
-  document.getElementById('aiResult').innerHTML='<div class="alert al-i mt8">🤖 AI analiz yapıyor...</div>';
-  try{
-    var base64=aiPhotoData.split(',')[1];
-    var mType=aiPhotoData.startsWith('data:image/png')?'image/png':'image/jpeg';
-    var prompt='Sen uzman bir veterinersin. Bu koyun/kuzu fotoğrafını analiz et.'+(animal?'\nHayvan: Küpe:'+kupe+', Tür:'+animal.type+', Irk:'+(animal.breed||'bilinmiyor'):'')+( symptoms?'\nBelirtiler: '+symptoms:'')+'\n\nDeğerlendir:\n1. Genel görünüm ve BCS skoru (1-5)\n2. Gözlemlenen sağlık sorunları\n3. Acil müdahale gerekiyor mu?\n4. Önerilen bakım/tedavi\n5. Veterinere gitme gerekliliği\n\nTürkçe, kısa ve net yanıt ver.';
-    var res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,messages:[{role:'user',content:[{type:'image',source:{type:'base64',media_type:mType,data:base64}},{type:'text',text:prompt}]}]})});
-    var data=await res.json();
-    var text=(data.content&&data.content[0]&&data.content[0].text)||'Analiz alınamadı.';
-    document.getElementById('aiResult').innerHTML='<div class="ai-result"><div style="font-weight:700;font-size:12px;color:var(--g800);margin-bottom:6px">🤖 AI Veteriner Analizi</div><div style="font-size:12px;line-height:1.7;white-space:pre-wrap">'+text+'</div><div style="font-size:10px;color:var(--g600);margin-top:7px;padding-top:6px;border-top:1px solid var(--g200)">⚠️ Yardımcı bilgi amaçlıdır. Kesin teşhis için veterinere başvurun.</div></div>';
-  }catch(e){document.getElementById('aiResult').innerHTML='<div class="alert al-d mt8">❌ AI hatası: '+e.message+'</div>';}
+
+async function runAI() {
+  if (!aiPhotoData) { notify('Önce fotoğraf ekleyin!', 'err'); return; }
+  var kupe = gv('ai-kupe');
+  var animal = C.animals.find(function(x) { return x.kupe === kupe; });
+  var symptoms = gv('ai-symptoms');
+  
+  document.getElementById('aiResult').innerHTML = '<div class="alert al-i mt8">🤖 Gemini analiz yapıyor...</div>';
+  
+  try {
+    var base64 = aiPhotoData.split(',')[1];
+    var mType = aiPhotoData.startsWith('data:image/png') ? 'image/png' : 'image/jpeg';
+    
+    var prompt = 'Sen uzman bir veterinersin. Bu koyun/kuzu fotoğrafını analiz et.' + 
+                 (animal ? '\nHayvan: Küpe:' + kupe + ', Tür:' + animal.type + ', Irk:' + (animal.breed || 'bilinmiyor') : '') + 
+                 (symptoms ? '\nBelirtiler: ' + symptoms : '') + 
+                 '\n\nDeğerlendir:\n1. Genel görünüm ve BCS skoru (1-5)\n2. Gözlemlenen sağlık sorunları\n3. Acil müdahale gerekiyor mu?\n4. Önerilen bakım/tedavi\n5. Veterinere gitme gerekliliği\n\nTürkçe, kısa ve net yanıt ver.';
+
+    // GEMINI API KEY BURADA
+    var apiKey = 'AIzaSyBvEenIk1WLawkwTm35hWgTj5RT3LyyYp8'; 
+    var url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' + apiKey;
+
+    var res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }, { inline_data: { mime_type: mType, data: base64 } }] }]
+      })
+    });
+
+    var data = await res.json();
+    if (data.error) throw new Error(data.error.message);
+
+    var text = (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts[0].text) || 'Analiz alınamadı.';
+
+    document.getElementById('aiResult').innerHTML = '<div class="ai-result"><div style="font-weight:700;font-size:12px;color:var(--g800);margin-bottom:6px">🤖 Gemini Veteriner Analizi</div><div style="font-size:12px;line-height:1.7;white-space:pre-wrap">' + text + '</div><div style="font-size:10px;color:var(--g600);margin-top:7px;padding-top:6px;border-top:1px solid var(--g200)">⚠️ Yardımcı bilgi amaçlıdır. Kesin teşhis için veterinere başvurun.</div></div>';
+    
+  } catch (e) {
+    document.getElementById('aiResult').innerHTML = '<div class="alert al-d mt8">❌ AI hatası: ' + e.message + '</div>';
+  }
 }
 
-// ===== BULK ADD =====
+// ===== BULK ADD MANUEL =====
 function openBulkAdd(){
   var text=prompt('Küpe numaralarını virgül veya yeni satır ile girin:');
   if(!text)return;
