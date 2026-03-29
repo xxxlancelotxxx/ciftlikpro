@@ -1583,40 +1583,55 @@ async function runAI() {
   var animal = C.animals.find(function(x) { return x.kupe === kupe; });
   var symptoms = gv('ai-symptoms');
   
-  document.getElementById('aiResult').innerHTML = '<div class="alert al-i mt8">🤖 Gemini analiz yapıyor...</div>';
+  // Kullanıcıya yükleniyor mesajı gösteriyoruz
+  document.getElementById('aiResult').innerHTML = '<div class="alert al-i mt8">🤖 Gemini analiz yapıyor... Lütfen bekleyin.</div>';
   
   try {
     var base64 = aiPhotoData.split(',')[1];
     var mType = aiPhotoData.startsWith('data:image/png') ? 'image/png' : 'image/jpeg';
     
+    // Yapay zekaya verilecek komut (Prompt)
     var prompt = 'Sen uzman bir veterinersin. Bu koyun/kuzu fotoğrafını analiz et.' + 
                  (animal ? '\nHayvan: Küpe:' + kupe + ', Tür:' + animal.type + ', Irk:' + (animal.breed || 'bilinmiyor') : '') + 
                  (symptoms ? '\nBelirtiler: ' + symptoms : '') + 
-                 '\n\nDeğerlendir:\n1. Genel görünüm ve BCS skoru (1-5)\n2. Gözlemlenen sağlık sorunları\n3. Acil müdahale gerekiyor mu?\n4. Önerilen bakım/tedavi\n5. Veterinere gitme gerekliliği\n\nTürkçe, kısa ve net yanıt ver.';
+                 '\n\nLütfen şu başlıklara göre değerlendir:\n1. Genel görünüm ve Vücut Kondisyon Skoru (Tahmini BCS 1-5)\n2. Gözlemlenen olası sağlık sorunları\n3. Acil müdahale gerekiyor mu?\n4. Önerilen bakım/tedavi adımları\n5. Veterinere gitme gerekliliği\n\nTürkçe, anlaşılır ve net yanıt ver.';
 
-    var apiKey = 'AIzaSyBvEenIk1WLawkwTm35hWgTj5RT3LyyYp8'; 
-    var url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + apiKey;
+    // KENDİ API ANAHTARINIZ EKLENDİ
+    var apiKey = 'AIzaSyAi45ewHj2HgmvqGl5DjLVy1fXbIYYzSVw'; 
+    
+    // DÜZELTME: Model sürümü gemini-1.5-flash olarak güncellendi.
+    var url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' + apiKey;
 
     var res = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }, { inline_data: { mime_type: mType, data: base64 } }] }]
+        contents: [{ 
+            parts: [
+                { text: prompt }, 
+                { inline_data: { mime_type: mType, data: base64 } }
+            ] 
+        }]
       })
     });
 
     var data = await res.json();
-    if (data.error) throw new Error(data.error.message);
+    
+    // Eğer Google API'den bir hata dönerse bunu yakala
+    if (!res.ok) {
+        throw new Error(data.error ? data.error.message : 'API bağlantı hatası.');
+    }
 
-    var text = (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts[0].text) || 'Analiz alınamadı.';
+    var text = (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts[0].text) || 'Analiz sonucu alınamadı.';
 
-    document.getElementById('aiResult').innerHTML = '<div class="ai-result"><div style="font-weight:700;font-size:12px;color:var(--g800);margin-bottom:6px">🤖 Gemini Veteriner Analizi</div><div style="font-size:12px;line-height:1.7;white-space:pre-wrap">' + text + '</div><div style="font-size:10px;color:var(--g600);margin-top:7px;padding-top:6px;border-top:1px solid var(--g200)">⚠️ Yardımcı bilgi amaçlıdır. Kesin teşhis için veterinere başvurun.</div></div>';
+    // Sonucu ekrana şık bir şekilde yazdır
+    document.getElementById('aiResult').innerHTML = '<div class="ai-result"><div style="font-weight:700;font-size:14px;color:var(--g800);margin-bottom:8px">🤖 Gemini Veteriner Analizi</div><div style="font-size:13px;line-height:1.6;white-space:pre-wrap;color:var(--text);">' + text + '</div><div style="font-size:10px;color:var(--g600);margin-top:10px;padding-top:8px;border-top:1px solid var(--border)">⚠️ Bu analiz yapay zeka tarafından üretilmiştir ve kesin bir tıbbi teşhis değildir. Lütfen gerçek bir veterinere danışmayı ihmal etmeyin.</div></div>';
     
   } catch (e) {
     document.getElementById('aiResult').innerHTML = '<div class="alert al-d mt8">❌ AI hatası: ' + e.message + '</div>';
+    console.error(e);
   }
 }
-
 // ===== BULK ADD MANUEL =====
 function openBulkAdd(){
   var text=prompt('Küpe numaralarını virgül veya yeni satır ile girin:');
