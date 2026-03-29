@@ -1590,16 +1590,16 @@ async function runAI() {
     var base64 = aiPhotoData.split(',')[1];
     var mType = aiPhotoData.startsWith('data:image/png') ? 'image/png' : 'image/jpeg';
     
-    // Yapay zekaya verilecek komut (Prompt)
+    // Yapay zekaya verilecek komut (Prompt) - Veteriner rolü
     var prompt = 'Sen uzman bir veterinersin. Bu koyun/kuzu fotoğrafını analiz et.' + 
                  (animal ? '\nHayvan: Küpe:' + kupe + ', Tür:' + animal.type + ', Irk:' + (animal.breed || 'bilinmiyor') : '') + 
                  (symptoms ? '\nBelirtiler: ' + symptoms : '') + 
                  '\n\nLütfen şu başlıklara göre değerlendir:\n1. Genel görünüm ve Vücut Kondisyon Skoru (Tahmini BCS 1-5)\n2. Gözlemlenen olası sağlık sorunları\n3. Acil müdahale gerekiyor mu?\n4. Önerilen bakım/tedavi adımları\n5. Veterinere gitme gerekliliği\n\nTürkçe, anlaşılır ve net yanıt ver.';
 
-    // KENDİ API ANAHTARINIZ EKLENDİ
-    var apiKey = 'AIzaSyAi45ewHj2HgmvqGl5DjLVy1fXbIYYzSVw'; 
+    // YENİ API ANAHTARINIZ BURAYA EKLENDİ
+    var apiKey = 'AIzaSyAVUe6wZCBSfPtXzC5AExPNS_iwBp01IYQ'; 
     
-    // DÜZELTME: Model sürümü gemini-1.5-flash olarak güncellendi.
+    // DÜZELTME: Görsel işleme yeteneği olan gemini-1.5-flash modeli kullanılıyor.
     var url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' + apiKey;
 
     var res = await fetch(url, {
