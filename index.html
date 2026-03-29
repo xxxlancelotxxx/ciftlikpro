@@ -1582,48 +1582,33 @@ async function runAI() {
   var kupe = gv('ai-kupe');
   var animal = C.animals.find(function(x) { return x.kupe === kupe; });
   var symptoms = gv('ai-symptoms');
-  
-  document.getElementById('aiResult').innerHTML = '<div class="alert al-i mt8">🤖 Model aranıyor ve analiz yapılıyor... Lütfen bekleyin.</div>';
-  
+
+  document.getElementById('aiResult').innerHTML = '<div class="alert al-i mt8">🤖 Gemini analiz yapıyor... Lütfen bekleyin.</div>';
+
   try {
     var base64 = aiPhotoData.split(',')[1];
     var mType = aiPhotoData.startsWith('data:image/png') ? 'image/png' : 'image/jpeg';
-    
-    var prompt = 'Sen uzman bir veterinersin. Bu koyun/kuzu fotoğrafını analiz et.' + 
-                 (animal ? '\nHayvan: Küpe:' + kupe + ', Tür:' + animal.type + ', Irk:' + (animal.breed || 'bilinmiyor') : '') + 
-                 (symptoms ? '\nBelirtiler: ' + symptoms : '') + 
-                 '\n\nLütfen şu başlıklara göre değerlendir:\n1. Genel görünüm ve Vücut Kondisyon Skoru (Tahmini BCS 1-5)\n2. Gözlemlenen olası sağlık sorunları\n3. Acil müdahale gerekiyor mu?\n4. Önerilen bakım/tedavi adımları\n5. Veterinere gitme gerekliliği\n\nTürkçe, anlaşılır ve net yanıt ver.';
 
-    // BURAYA KENDİ ÇALIŞAN ANAHTARINIZI YAZIN
-    var apiKey = 'BURAYA_YENI_API_YAZIN'.trim(); 
+    var prompt = 'Sen uzman bir veterinersin. Bu koyun/kuzu fotoğrafını analiz et.' +
+                 (animal ? '\nHayvan: Küpe:' + kupe + ', Tür:' + animal.type + ', Irk:' + (animal.breed || 'bilinmiyor') : '') +
+                 (symptoms ? '\nBelirtiler: ' + symptoms : '') +
+                 '\n\nDeğerlendir:\n1. Genel görünüm ve Vücut Kondisyon Skoru (Tahmini BCS 1-5)\n2. Gözlemlenen sağlık sorunları\n3. Acil müdahale gerekiyor mu?\n4. Önerilen bakım/tedavi\n5. Veterinere gitme gerekliliği\n\nTürkçe, kısa ve net yanıt ver.';
+
+    var apiKey = 'AIzaSyAmk5ObgeqjwwU8LpRPrsfIuM8XeVZmVnk';
     
-    // --- AKILLI MODEL BULUCU ---
-    var modelsRes = await fetch('https://generativelanguage.googleapis.com/v1beta/models?key=' + apiKey);
-    var modelsData = await modelsRes.json();
-    if (!modelsRes.ok) throw new Error("Model listesi alınamadı: " + (modelsData.error ? modelsData.error.message : ''));
-    
-    var availableModels = modelsData.models || [];
-    var validModels = availableModels.filter(m => m.supportedGenerationMethods && m.supportedGenerationMethods.includes('generateContent'));
-    
-    var flashModel = validModels.find(m => m.name.includes('gemini-1.5-flash'));
-    var proModel = validModels.find(m => m.name.includes('gemini-1.5-pro'));
-    var visionModel = validModels.find(m => m.name.includes('gemini-pro-vision'));
-    
-    // En iyi modeli otomatik seçiyoruz
-    var selectedModel = flashModel ? flashModel.name : (proModel ? proModel.name : (visionModel ? visionModel.name : validModels[0].name));
-    
-    // --- SEÇİLEN MODELE FOTOĞRAFI GÖNDER ---
-    var url = 'https://generativelanguage.googleapis.com/v1beta/' + selectedModel + ':generateContent?key=' + apiKey;
+    // MODEL DÜZELTİLDİ: Sizin hesabınızdaki güncel modele bağlandı.
+    var url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + apiKey;
 
     var res = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        contents: [{ 
-            parts: [
-                { text: prompt }, 
-                { inline_data: { mime_type: mType, data: base64 } }
-            ] 
+        contents: [{
+          parts: [
+            { text: prompt },
+            // PAYLOAD DÜZELTİLDİ: camelCase formatında inlineData
+            { inlineData: { mimeType: mType, data: base64 } }
+          ]
         }]
       })
     });
@@ -1631,16 +1616,16 @@ async function runAI() {
     var data = await res.json();
     
     if (!res.ok) {
-        throw new Error(data.error ? data.error.message : 'API bağlantı hatası.');
+        throw new Error(data.error ? data.error.message : 'Bilinmeyen API Hatası');
     }
 
-    var text = (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts[0].text) || 'Analiz sonucu alınamadı.';
+    var text = (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts[0].text) || 'Analiz alınamadı.';
 
-    document.getElementById('aiResult').innerHTML = '<div class="ai-result"><div style="font-weight:700;font-size:14px;color:var(--g800);margin-bottom:8px">🤖 Gemini Veteriner Analizi ('+selectedModel.replace('models/','')+' kullanıldı)</div><div style="font-size:13px;line-height:1.6;white-space:pre-wrap;color:var(--text);">' + text + '</div><div style="font-size:10px;color:var(--g600);margin-top:10px;padding-top:8px;border-top:1px solid var(--border)">⚠️ Bu analiz yapay zeka tarafından üretilmiştir ve kesin bir tıbbi teşhis değildir. Lütfen gerçek bir veterinere danışmayı ihmal etmeyin.</div></div>';
-    
+    document.getElementById('aiResult').innerHTML = '<div class="ai-result"><div style="font-weight:700;font-size:14px;color:var(--g800);margin-bottom:6px">🤖 Gemini 2.5 Veteriner Analizi</div><div style="font-size:12px;line-height:1.7;white-space:pre-wrap">' + text + '</div><div style="font-size:10px;color:var(--g600);margin-top:7px;padding-top:6px;border-top:1px solid var(--g200)">⚠️ Yardımcı bilgi amaçlıdır. Kesin teşhis için veterinere başvurun.</div></div>';
+
   } catch (e) {
     document.getElementById('aiResult').innerHTML = '<div class="alert al-d mt8">❌ AI hatası: ' + e.message + '</div>';
-    console.error("AI API Error:", e);
+    console.error(e);
   }
 }
 
