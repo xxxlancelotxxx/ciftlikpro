@@ -1579,6 +1579,24 @@ function stopAICam(){if(aiStream){aiStream.getTracks().forEach(function(t){t.sto
 
 async function runAI() {
   if (!aiPhotoData) { notify('Önce fotoğraf ekleyin!', 'err'); return; }
+  
+  // 1. Tarayıcı hafızasından API anahtarını okumaya çalış
+  var apiKey = localStorage.getItem('gemini_api_key');
+  
+  // 2. Eğer anahtar yoksa (veya ilk girişse), kullanıcıdan girmesini iste
+  if (!apiKey) {
+      apiKey = prompt("🤖 Lütfen Google Gemini API Anahtarınızı girin:\n\n(Bu anahtar sadece sizin cihazınıza kaydedilecek ve GitHub'da görünmeyecektir. aistudio.google.com adresinden ücretsiz alabilirsiniz.)");
+      
+      // Kullanıcı iptal ederse veya boş geçerse işlemi durdur
+      if (!apiKey || apiKey.trim() === '') {
+          notify('API Anahtarı olmadan analiz yapılamaz!', 'err');
+          return;
+      }
+      // Girilen anahtarı tarayıcıya kaydet
+      localStorage.setItem('gemini_api_key', apiKey.trim());
+      apiKey = apiKey.trim();
+  }
+
   var kupe = gv('ai-kupe');
   var animal = C.animals.find(function(x) { return x.kupe === kupe; });
   var symptoms = gv('ai-symptoms');
@@ -1589,15 +1607,12 @@ async function runAI() {
     var base64 = aiPhotoData.split(',')[1];
     var mType = aiPhotoData.startsWith('data:image/png') ? 'image/png' : 'image/jpeg';
 
-    var prompt = 'Sen uzman bir veterinersin. Bu koyun/kuzu fotoğrafını analiz et.' +
+    var promptText = 'Sen uzman bir veterinersin. Bu koyun/kuzu fotoğrafını analiz et.' +
                  (animal ? '\nHayvan: Küpe:' + kupe + ', Tür:' + animal.type + ', Irk:' + (animal.breed || 'bilinmiyor') : '') +
                  (symptoms ? '\nBelirtiler: ' + symptoms : '') +
                  '\n\nDeğerlendir:\n1. Genel görünüm ve Vücut Kondisyon Skoru (Tahmini BCS 1-5)\n2. Gözlemlenen sağlık sorunları\n3. Acil müdahale gerekiyor mu?\n4. Önerilen bakım/tedavi\n5. Veterinere gitme gerekliliği\n\nTürkçe, kısa ve net yanıt ver.';
 
-    // BURAYA KENDİ YENİ, KISITLAMASIZ API ANAHTARINIZI YAZIN
-    var apiKey = 'AIzaSyAEf6AUfXNywvmG8vaI38FlQhxlhTIL_sQ';
-    
-    // Doğrudan çalışan modele istek atıyoruz (Gereksiz model listeleme kaldırıldı)
+    // Kodun içinde anahtar yok, değişkenden geliyor.
     var url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + apiKey;
 
     var res = await fetch(url, {
@@ -1606,7 +1621,7 @@ async function runAI() {
       body: JSON.stringify({
         contents: [{
           parts: [
-            { text: prompt },
+            { text: promptText },
             { inlineData: { mimeType: mType, data: base64 } }
           ]
         }]
@@ -1615,8 +1630,11 @@ async function runAI() {
 
     var data = await res.json();
     
+    // 3. Eğer API anahtarı yanlışsa, hatalıysa veya süresi dolmuşsa:
     if (!res.ok) {
-        throw new Error(data.error ? data.error.message : 'Bilinmeyen API Hatası');
+        // Hafızadaki bozuk anahtarı sil ki bir sonraki denemede tekrar sorsun
+        localStorage.removeItem('gemini_api_key');
+        throw new Error(data.error ? data.error.message : 'API bağlantı hatası.');
     }
 
     var text = (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts[0].text) || 'Analiz alınamadı.';
@@ -1624,7 +1642,8 @@ async function runAI() {
     document.getElementById('aiResult').innerHTML = '<div class="ai-result"><div style="font-weight:700;font-size:14px;color:var(--g800);margin-bottom:6px">🤖 Gemini 2.5 Veteriner Analizi</div><div style="font-size:12px;line-height:1.7;white-space:pre-wrap">' + text + '</div><div style="font-size:10px;color:var(--g600);margin-top:7px;padding-top:6px;border-top:1px solid var(--g200)">⚠️ Yardımcı bilgi amaçlıdır. Kesin teşhis için veterinere başvurun.</div></div>';
 
   } catch (e) {
-    document.getElementById('aiResult').innerHTML = '<div class="alert al-d mt8">❌ AI hatası: ' + e.message + '</div>';
+    // Hata mesajına "Anahtarı Sıfırla" butonu da ekleyelim ki kullanıcı yanlış girerse düzeltebilsin
+    document.getElementById('aiResult').innerHTML = '<div class="alert al-d mt8" style="flex-direction:column"><span>❌ AI hatası: ' + e.message + '</span><button class="btn bd btn-sm mt8" onclick="localStorage.removeItem(\'gemini_api_key\'); notify(\'API Anahtarı silindi. Tekrar deneyin.\', \'ok\');">🔑 Anahtarı Sıfırla / Değiştir</button></div>';
     console.error("Detaylı Hata:", e);
   }
 }
